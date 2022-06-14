@@ -1,6 +1,6 @@
 
 const productControllers = require("../DL/controllers/productControllers")
-
+const categoryControllers = require("../DL/controllers/categryControllers")
 async function getProductById(id) {
     try {
         const product = await productControllers.findById(id)
@@ -12,6 +12,13 @@ async function getProductById(id) {
 
 async function getProducts(filter) {
     const products = await productControllers.find(filter)
+    if (products.length === 0) throw "no products has be found"
+    return products
+}
+
+async function getProductsByCategoryName(categoryName) {
+    const category = await categoryControllers.find({ name: categoryName })
+    const products = await productControllers.find({ category: category[0]._id })
     if (products.length === 0) throw "no products has be found"
     return products
 }
@@ -48,4 +55,4 @@ async function deleteProductById(id) {
 }
 
 
-module.exports = { getProductById, getProducts, createProduct, updateProductById, deleteProductById }
+module.exports = { getProductById, getProducts, createProduct, updateProductById, deleteProductById, getProductsByCategoryName }

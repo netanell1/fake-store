@@ -9,6 +9,7 @@ async function findById(id) {
     try {
         const product = await ProductModel.findById(id)
             .populate({ path: "category", select: ["name"] })
+        if (!product.isActive) throw "error"
         return product
     } catch (error) {
         throw error
@@ -19,7 +20,6 @@ async function find(filter = {}) {
     try {
         const product = await ProductModel.find({ ...filter, isActive: true })
             .populate({ path: "category", select: ["name"] })
-        if (!product.isActive) throw "error"
         return product
     } catch (error) {
         throw "error"

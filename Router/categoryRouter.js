@@ -11,9 +11,10 @@ function Router(app) {
         }
     })
 
-    app.post(`/categories`, async (req, res) => {
+    app.get(`/categories`, async (req, res) => {
+        console.log(req.query);
         try {
-            const categories = await categoryBL.getCategries(req.body)
+            const categories = await categoryBL.getCategries( req.query)
             res.status(200).send(categories)
         } catch (error) {
             res.status(400).send(error)

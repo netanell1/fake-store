@@ -11,9 +11,18 @@ function Router(app) {
         }
     })
 
-    app.post(`/products`, async (req, res) => {
+    app.get(`/products`, async (req, res) => {
         try {
-            const products = await productBL.getProducts(req.body)
+            const products = await productBL.getProducts(req.query)
+            res.status(200).send(products)
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    })
+
+    app.get(`/products/category`, async (req, res) => {
+        try {
+            const products = await productBL.getProductsByCategoryName(req.query.category)
             res.status(200).send(products)
         } catch (error) {
             res.status(400).send(error)

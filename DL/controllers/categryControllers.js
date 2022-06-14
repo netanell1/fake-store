@@ -11,7 +11,7 @@ async function create(category) {
 async function findById(id) {
     try {
         const category = await CategoryModel.findById(id)
-        if(!category.isActive) throw "error"
+        if (!category.isActive) throw "error"
         return category
     } catch (error) {
         throw error
